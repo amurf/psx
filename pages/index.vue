@@ -1,20 +1,22 @@
 <template>
   <div class="container">
 
-    <table>
-      <caption v-if="entries.items">
-        Showing {{ entries.skip }}-{{ entries.skip + entries.items.length }} of {{ entries.total }} 
-        <button @click="prev" class="p-1 rounded shadow bg-blue-100" v-if="entries.skip != 0">prev</button>
-        <button @click="next" class="p-1 rounded shadow bg-blue-100" v-if="entries.skip + entries.items.length != entries.total">next</button>
-      </caption>
+    <div v-if="entries.items" class='w-3/12'>
+      {{ entries.skip }}-{{ entries.skip + entries.items.length }} of {{ entries.total }}
+      <br>
+      <button @click="prev" class="p-1 rounded shadow bg-blue-100" v-if="entries.skip != 0">prev</button>
+      <button @click="next" class="p-1 rounded shadow bg-blue-100" v-if="entries.skip + entries.items.length != entries.total">next</button>
+    </div>
+
+    <table class='w-full'>
       <thead>
-        <th>Serial</th>
-        <th>Name</th>
+        <th class='w-4/12'>Serial</th>
+        <th class='text-left'>Name</th>
       </thead>
       <tbody>
         <tr v-for="entry in entries.items">
           <td>{{ entry.fields.serialNumber }}</td>
-          <td>{{ entry.fields.officialTitle }}</td>
+          <td class='text-left'>{{ entry.fields.officialTitle }}</td>
         </tr>
       </tbody>
     </table>
