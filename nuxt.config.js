@@ -2,6 +2,11 @@ export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
+  privateRuntimeConfig: {
+    ACCESS_TOKEN: process.env.ACCESS_TOKEN,
+    SPACE_ID: process.env.SPACE_ID,
+  },
+
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
 
