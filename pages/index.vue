@@ -10,12 +10,12 @@
 
     <table class='w-full'>
       <thead>
-        <th class='w-4/12'>Serial</th>
+        <th class='w-4/12 text-left'>Serial</th>
         <th class='text-left'>Name</th>
       </thead>
       <tbody>
         <tr v-for="entry in entries.items">
-          <td>{{ entry.fields.serialNumber }}</td>
+          <td class='text-left'>{{ entry.fields.serialNumber }}</td>
           <td class='text-left'>{{ entry.fields.officialTitle }}</td>
         </tr>
       </tbody>
