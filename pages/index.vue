@@ -33,16 +33,16 @@ export default {
 
   methods: {
     async next() {
-      let entries = await client.getEntries({ skip: this.entries.skip + this.entries.limit });
+      let entries = await client.getEntries({ skip: this.entries.skip + this.entries.limit, limit: this.entries.limit });
       this.entries = entries;
     },
     async prev() {
-      let entries = await client.getEntries({ skip: this.entries.skip - this.entries.limit });
+      let entries = await client.getEntries({ skip: this.entries.skip - this.entries.limit, limit: this.entries.limit });
       this.entries = entries;
     }
   },
   async fetch() {
-    let entries = await client.getEntries()
+    let entries = await client.getEntries({ limit: 20, skip: 0 })
     this.entries = entries;
 
     console.log(this.entries);
