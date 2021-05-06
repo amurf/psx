@@ -1,3 +1,5 @@
+import dotenv from "dotenv"; dotenv.config();
+
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -21,12 +23,18 @@ export default {
     ]
   },
 
+  env: {
+    ACCESS_TOKEN: process.env.ACCESS_TOKEN,
+    SPACE_ID: process.env.SPACE_ID,
+  },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '~/plugins/contentful',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -36,6 +44,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/dotenv',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
