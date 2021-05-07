@@ -1,7 +1,5 @@
 <template>
-
-  <div class='grid-2'>
-
+  <div>
     <div class="side-logo">
 
       <span class='psx-logo-border'>
@@ -88,10 +86,6 @@ export default {
   grid-gap: 20px;
 }
 
-.grid-2 {
-  display: grid;
-  grid-template-columns: 75px auto;
-}
 .psx-logo-border {
   border: 1px solid white;
   padding: 5px;
@@ -118,6 +112,10 @@ export default {
   font-size: 0.8em;
 }
 .side-logo {
+  position: fixed;
+  width: 75px;
+  height: 100vh;
+  top: 0;
   padding-top: 1em;
   background-color: black;
   text-align:center;
