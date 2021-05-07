@@ -1,14 +1,13 @@
 <template>
   <div>
     <div class="side-logo">
-
       <span class='psx-logo-border'>
         <img class='psx-logo' src="~/assets/psx.png" />
       </span>
       <span class='region-indicator'>PAL</span>
       <span class='flip'>PlayStation</span>
     </div>
-    <div>
+    <div class='content'>
       <div v-if="entries.items" class='m-auto nav'>
         {{ entries.skip }}-{{ entries.skip + entries.items.length }} of {{ entries.total }}
         <br>
@@ -75,9 +74,9 @@ export default {
   font-weight: normal;
   font-style: normal;
 }
-.examplefontl {
-  font-family: 'Zrnic';
-  color: black;
+.content {
+  /* allow for fixed sidebar */
+  margin-left: 75px;
 }
 .grid {
   grid-template-columns: auto auto auto auto;
