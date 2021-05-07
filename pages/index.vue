@@ -1,21 +1,32 @@
 <template>
-  <div>
-    <div v-if="entries.items" class='m-auto nav'>
-      {{ entries.skip }}-{{ entries.skip + entries.items.length }} of {{ entries.total }}
-      <br>
-      <button @click="prev" class="p-1 rounded shadow bg-blue-100" v-if="entries.skip != 0">prev</button>
-      <button @click="next" class="p-1 rounded shadow bg-blue-100" v-if="entries.skip + entries.items.length != entries.total">next</button>
+
+  <div class='grid-2'>
+
+    <div class="side-logo">
+
+      <span class='psx-logo-border'>
+        <img class='psx-logo' src="~/assets/psx.png" />
+      </span>
+      <span class='region-indicator'>PAL</span>
+      <span class='flip'>PlayStation</span>
     </div>
-
-    <div class="grid">
-
-
-      <div v-for="entry in entries.items" class='games'>
-        <img v-if="entry.fields.cover" :src="entries.includes.Asset.find(item => item.sys.id == entry.fields.cover.sys.id).fields.file.url" />
-        <div v-else class='placeholder-image border'>No cover</div>
-        {{ entry.fields.serialNumber }}: {{ entry.fields.officialTitle }}
+    <div>
+      <div v-if="entries.items" class='m-auto nav'>
+        {{ entries.skip }}-{{ entries.skip + entries.items.length }} of {{ entries.total }}
+        <br>
+        <button @click="prev" class="p-1 rounded shadow bg-blue-100" v-if="entries.skip != 0">prev</button>
+        <button @click="next" class="p-1 rounded shadow bg-blue-100" v-if="entries.skip + entries.items.length != entries.total">next</button>
       </div>
 
+      <div class="grid">
+
+        <div v-for="entry in entries.items" class='games'>
+          <img v-if="entry.fields.cover" :src="entries.includes.Asset.find(item => item.sys.id == entry.fields.cover.sys.id).fields.file.url" />
+          <div v-else class='placeholder-image border'>No cover</div>
+          {{ entry.fields.serialNumber }}: {{ entry.fields.officialTitle }}
+        </div>
+
+      </div>
     </div>
   </div>
 </template>
@@ -45,15 +56,82 @@ export default {
     this.entries = entries;
   },
 
+  /*
+  #DF0024 = psx red
+  #F3C300 = psx yellow
+  #00AC9F = psx green
+  #2E6DB4 = psx blue
+  #bec1c0 = psx light gray
+  #6f706f = psx dark gray
+   */
 }
 </script>
 
 <style>
+@font-face {
+  font-family: 'Zrnic';
+  src:  url('~/assets/fonts/Zrnic.ttf.woff') format('woff'),
+  url('~/assets/fonts/Zrnic.ttf.svg#Zrnic') format('svg'),
+  url('~/assets/fonts/Zrnic.ttf.eot'),
+  url('~/assets/fonts/Zrnic.ttf.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+.examplefontl {
+  font-family: 'Zrnic';
+  color: black;
+}
 .grid {
   grid-template-columns: auto auto auto auto;
   width: 70%;
   margin: auto;
   grid-gap: 20px;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 75px auto;
+}
+.psx-logo-border {
+  border: 1px solid white;
+  padding: 5px;
+  z-index: 222;
+  height: 60px;
+  display: inline-block;
+  width: 65px;
+
+}
+.psx-logo {
+  height: 50px;
+  width: 50px;
+  display: inline;
+}
+
+.region-indicator {
+  background-color: white;
+  font-weight: bold;
+  font-family: 'ZRNIC';
+  border-radius: 5px;
+  width: 60px;
+  display: inline-block;
+  margin-top: 0.5em;
+  font-size: 0.8em;
+}
+.side-logo {
+  padding-top: 1em;
+  background-color: black;
+  text-align:center;
+}
+
+.flip {
+  margin-top: 0.3em;
+  color: white;
+  transform: scale(-1);
+  writing-mode: vertical-rl;
+  text-align: right;
+  font-size: 2.5em;
+  font-family: 'Zrnic';
+  background-color: black;
 }
 
 .games {
