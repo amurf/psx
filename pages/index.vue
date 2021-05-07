@@ -16,21 +16,6 @@
         {{ entry.fields.serialNumber }}: {{ entry.fields.officialTitle }}
       </div>
 
-      <!--
-        <table class='w-full'>
-        <thead>
-        <th class='w-4/12 text-left'>Serial</th>
-        <th class='text-left'>Name</th>
-        </thead>
-        <tbody>
-        <tr v-for="entry in entries.items">
-        <td class='text-left'>{{ entry.fields.serialNumber }}</td>
-        <td class='text-left'>{{ entry.fields.officialTitle }}</td>
-        </tr>
-        </tbody>
-        </table>
-      -->
-
     </div>
   </div>
 </template>
@@ -45,6 +30,7 @@ export default {
   },
 
   methods: {
+    // TODO: can tidy these up to use the one fetch, but calculate the skip/limit
     async next() {
       let entries = await client.getEntries({ skip: this.entries.skip + this.entries.limit, limit: this.entries.limit });
       this.entries = entries;
@@ -57,19 +43,12 @@ export default {
   async fetch() {
     let entries = await client.getEntries({ limit: 20, skip: 0 })
     this.entries = entries;
-
-    console.log(this.entries);
   },
 
 }
 </script>
 
 <style>
-/* Sample `apply` at-rules with Tailwind CSS
-.container {
-@apply min-h-screen flex justify-center items-center text-center mx-auto mt-2;
-}
- */
 .grid {
   grid-template-columns: auto auto auto auto;
   width: 70%;
@@ -92,33 +71,4 @@ export default {
   height: 250px;
 }
 
-.title {
-  font-family:
-  'Quicksand',
-  'Source Sans Pro',
-  -apple-system,
-  BlinkMacSystemFont,
-  'Segoe UI',
-  Roboto,
-  'Helvetica Neue',
-  Arial,
-  sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
 </style>
