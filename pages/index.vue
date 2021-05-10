@@ -155,4 +155,10 @@ export default {
   height: 250px;
 }
 
+@media only screen and (max-width: 600px) {
+  .grid {
+    grid-template-columns: auto;
+  }
+}
+
 </style>
