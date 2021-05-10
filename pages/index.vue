@@ -42,31 +42,24 @@ export default {
   },
 
   methods: {
-    // TODO: can tidy these up to use the one fetch, but calculate the skip/limit
-    async next() {
+
+    async fetchEntries(skip, limit) {
       this.loading = true;
 
-      let entries = await client.getEntries({ skip: this.entries.skip + this.entries.limit, limit: this.entries.limit });
+      let entries = await client.getEntries({ skip, limit, content_type: 'game', order: 'fields.officialTitle', include: 2 });
       this.entries = entries;
 
       this.loading = false;
     },
+    async next() {
+      this.fetchEntries(this.entries.skip + this.entries.limit, this.entries.limit);
+    },
     async prev() {
-      this.loading = true;
-
-      let entries = await client.getEntries({ skip: this.entries.skip - this.entries.limit, limit: this.entries.limit });
-      this.entries = entries;
-
-      this.loading = false;
+      this.fetchEntries(this.entries.skip - this.entries.limit, this.entries.limit);
     }
   },
   async fetch() {
-    this.loading = true;
-
-    let entries = await client.getEntries({ limit: 20, skip: 0 })
-    this.entries = entries;
-
-    this.loading = false;
+    this.fetchEntries(0, 20);
   },
 
   /*
