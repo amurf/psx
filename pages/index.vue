@@ -17,7 +17,11 @@
 
       <div class="grid">
 
-        <div v-for="entry in entries.items" class='games'>
+        <div v-if="loading">
+          Loading..
+        </div>
+
+        <div v-else v-for="entry in entries.items" class='games'>
           <img v-if="entry.fields.cover" :src="entries.includes.Asset.find(item => item.sys.id == entry.fields.cover.sys.id).fields.file.url" />
           <div v-else class='placeholder-image border'>No cover</div>
           {{ entry.fields.serialNumber }}: {{ entry.fields.officialTitle }}
@@ -34,23 +38,35 @@ const client = createClient()
 
 export default {
   data() {
-    return { entries: {} };
+    return { entries: {}, loading: true };
   },
 
   methods: {
     // TODO: can tidy these up to use the one fetch, but calculate the skip/limit
     async next() {
+      this.loading = true;
+
       let entries = await client.getEntries({ skip: this.entries.skip + this.entries.limit, limit: this.entries.limit });
       this.entries = entries;
+
+      this.loading = false;
     },
     async prev() {
+      this.loading = true;
+
       let entries = await client.getEntries({ skip: this.entries.skip - this.entries.limit, limit: this.entries.limit });
       this.entries = entries;
+
+      this.loading = false;
     }
   },
   async fetch() {
+    this.loading = true;
+
     let entries = await client.getEntries({ limit: 20, skip: 0 })
     this.entries = entries;
+
+    this.loading = false;
   },
 
   /*
