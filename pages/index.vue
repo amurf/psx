@@ -1,35 +1,24 @@
 <template>
-  <div>
-    <div class="side-logo">
-      <span class='psx-logo-border'>
-        <img class='psx-logo' src="~/assets/psx.png" />
-      </span>
-      <span class='region-indicator'>PAL</span>
-      <span class='flip'>PlayStation</span>
+  <span>
+    <div v-if="entries.items" class='m-auto nav'>
+      {{ entries.skip }}-{{ entries.skip + entries.items.length }} of {{ entries.total }}
+      <br>
+      <button @click="prev" class="p-1 rounded shadow bg-blue-100" v-if="entries.skip != 0">prev</button>
+      <button @click="next" class="p-1 rounded shadow bg-blue-100" v-if="entries.skip + entries.items.length != entries.total">next</button>
     </div>
-    <div class='content'>
-      <div v-if="entries.items" class='m-auto nav'>
-        {{ entries.skip }}-{{ entries.skip + entries.items.length }} of {{ entries.total }}
-        <br>
-        <button @click="prev" class="p-1 rounded shadow bg-blue-100" v-if="entries.skip != 0">prev</button>
-        <button @click="next" class="p-1 rounded shadow bg-blue-100" v-if="entries.skip + entries.items.length != entries.total">next</button>
+
+    <div class="grid">
+      <div v-if="loading">
+        Loading..
       </div>
 
-      <div class="grid">
-
-        <div v-if="loading">
-          Loading..
-        </div>
-
-        <div v-else v-for="entry in entries.items" class='games'>
-          <img v-if="entry.fields.cover" :src="entries.includes.Asset.find(item => item.sys.id == entry.fields.cover.sys.id).fields.file.url" />
-          <div v-else class='placeholder-image border'>No cover</div>
-          {{ entry.fields.serialNumber }}: {{ entry.fields.officialTitle }}
-        </div>
-
-      </div>
+      <NuxtLink :to='"/game/" + entry.sys.id' v-else v-for="entry in entries.items" class='games' :key="entry.sys.id">
+      <img v-if="entry.fields.cover" :src="entries.includes.Asset.find(item => item.sys.id == entry.fields.cover.sys.id).fields.file.url" />
+      <div v-else class='placeholder-image border'>No cover</div>
+      {{ entry.fields.serialNumber }}: {{ entry.fields.officialTitle }}
+      </NuxtLink>
     </div>
-  </div>
+  </span>
 </template>
 
 <script>
@@ -83,61 +72,12 @@ export default {
   font-weight: normal;
   font-style: normal;
 }
-.content {
-  /* allow for fixed sidebar */
-  margin-left: 75px;
-}
+
 .grid {
   grid-template-columns: auto auto auto auto;
   width: 70%;
   margin: auto;
   grid-gap: 20px;
-}
-
-.psx-logo-border {
-  border: 1px solid white;
-  padding: 5px;
-  z-index: 222;
-  height: 60px;
-  display: inline-block;
-  width: 65px;
-
-}
-.psx-logo {
-  height: 50px;
-  width: 50px;
-  display: inline;
-}
-
-.region-indicator {
-  background-color: white;
-  font-weight: bold;
-  font-family: 'ZRNIC';
-  border-radius: 5px;
-  width: 60px;
-  display: inline-block;
-  margin-top: 0.5em;
-  font-size: 0.8em;
-}
-.side-logo {
-  position: fixed;
-  width: 75px;
-  height: 100vh;
-  top: 0;
-  padding-top: 1em;
-  background-color: black;
-  text-align:center;
-}
-
-.flip {
-  margin-top: 0.3em;
-  color: white;
-  transform: scale(-1);
-  writing-mode: vertical-rl;
-  text-align: right;
-  font-size: 2.5em;
-  font-family: 'Zrnic';
-  background-color: black;
 }
 
 .games {
