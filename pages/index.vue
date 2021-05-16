@@ -15,7 +15,9 @@
       <NuxtLink :to='"/game/" + entry.sys.id' v-else v-for="entry in entries.items" class='game-link' :key="entry.sys.id">
         <img v-if="entry.fields.cover" :src="entries.includes.Asset.find(item => item.sys.id == entry.fields.cover.sys.id).fields.file.url" />
         <div v-else class='placeholder-image border'>No cover</div>
-        <span class='game-link-text'>{{ entry.fields.serialNumber }}: {{ entry.fields.officialTitle }}</span>
+
+        <span class='game-link-serial'>{{ entry.fields.serialNumber }}</span>
+        <span class='game-link-title'> {{ entry.fields.officialTitle }}</span>
       </NuxtLink>
     </div>
   </span>
