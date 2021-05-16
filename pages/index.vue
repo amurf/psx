@@ -7,15 +7,15 @@
       <button @click="next" class="p-1 rounded shadow bg-blue-100" v-if="entries.skip + entries.items.length != entries.total">next</button>
     </div>
 
-    <div class="grid">
+    <div class="games">
       <div v-if="loading">
         Loading..
       </div>
 
-      <NuxtLink :to='"/game/" + entry.sys.id' v-else v-for="entry in entries.items" class='games' :key="entry.sys.id">
-      <img v-if="entry.fields.cover" :src="entries.includes.Asset.find(item => item.sys.id == entry.fields.cover.sys.id).fields.file.url" />
-      <div v-else class='placeholder-image border'>No cover</div>
-      {{ entry.fields.serialNumber }}: {{ entry.fields.officialTitle }}
+      <NuxtLink :to='"/game/" + entry.sys.id' v-else v-for="entry in entries.items" class='game-link' :key="entry.sys.id">
+        <img v-if="entry.fields.cover" :src="entries.includes.Asset.find(item => item.sys.id == entry.fields.cover.sys.id).fields.file.url" />
+        <div v-else class='placeholder-image border'>No cover</div>
+        <span class='game-link-text'>{{ entry.fields.serialNumber }}: {{ entry.fields.officialTitle }}</span>
       </NuxtLink>
     </div>
   </span>
@@ -48,7 +48,10 @@ export default {
     }
   },
   async fetch() {
-    this.fetchEntries(0, 20);
+    const startAtEntry   = 0;
+    const entriesToFetch = 3 * 7;
+
+    this.fetchEntries(startAtEntry, entriesToFetch);
   },
 
   /*
@@ -73,32 +76,33 @@ export default {
   font-style: normal;
 }
 
-.grid {
-  grid-template-columns: auto auto auto auto;
-  width: 70%;
-  margin: auto;
-  grid-gap: 20px;
-}
-
 .games {
-  width: 250px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  padding-left: 75px;
+  grid-gap: 20px;
+  margin: 0 auto 30px;
+  max-width: 960px;
 }
 
 .nav {
   margin-top: 1.5em;
   margin-bottom: 2em;
   text-align: center;
+  padding-left: 75px;
 }
 
-.games img, .games .placeholder-image {
-  width: 250px;
+.game-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.game-link img {
+  width: 100%;
   height: 250px;
-}
-
-@media only screen and (max-width: 600px) {
-  .grid {
-    grid-template-columns: auto;
-  }
+  object-fit: contain;
 }
 
 </style>
