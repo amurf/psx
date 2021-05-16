@@ -10,6 +10,16 @@
 
 <style>
 
+@font-face {
+  font-family: 'Zrnic';
+  src:  url('~/assets/fonts/Zrnic.ttf.woff') format('woff'),
+  url('~/assets/fonts/Zrnic.ttf.svg#Zrnic') format('svg'),
+  url('~/assets/fonts/Zrnic.ttf.eot'),
+  url('~/assets/fonts/Zrnic.ttf.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .side-logo {
   position: fixed;
   width: 75px;
