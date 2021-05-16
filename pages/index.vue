@@ -1,6 +1,6 @@
 <template>
   <span>
-    <div v-if="entries.items" class='m-auto nav'>
+    <div v-if="entries.items" class='nav'>
       {{ entries.skip }}-{{ entries.skip + entries.items.length }} of {{ entries.total }}
       <br>
       <button @click="prev" class="p-1 rounded shadow bg-blue-100" v-if="entries.skip != 0">prev</button>
@@ -13,11 +13,11 @@
       </div>
 
       <NuxtLink :to='"/game/" + entry.sys.id' v-else v-for="entry in entries.items" class='game-link' :key="entry.sys.id">
-        <img v-if="entry.fields.cover" :src="entries.includes.Asset.find(item => item.sys.id == entry.fields.cover.sys.id).fields.file.url" />
-        <div v-else class='placeholder-image border'>No cover</div>
+      <img v-if="entry.fields.cover" :src="entries.includes.Asset.find(item => item.sys.id == entry.fields.cover.sys.id).fields.file.url" />
+      <div v-else class='placeholder-image border'>No cover</div>
 
-        <span class='game-link-serial'>{{ entry.fields.serialNumber }}</span>
-        <span class='game-link-title'> {{ entry.fields.officialTitle }}</span>
+      <span class='game-link-serial'>{{ entry.fields.serialNumber }}</span>
+      <span class='game-link-title'> {{ entry.fields.officialTitle }}</span>
       </NuxtLink>
     </div>
   </span>
@@ -81,17 +81,17 @@ export default {
 .games {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  padding-left: 75px;
   grid-gap: 20px;
   margin: 0 auto 30px;
   max-width: 960px;
 }
 
 .nav {
-  margin-top: 1.5em;
-  margin-bottom: 2em;
-  text-align: center;
-  padding-left: 75px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  margin: 1em;
 }
 
 .game-link {
