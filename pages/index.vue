@@ -2,9 +2,10 @@
   <span>
     <div v-if="entries.items" class='nav'>
       {{ entries.skip }}-{{ entries.skip + entries.items.length }} of {{ entries.total }}
-      <br>
-      <button @click="prev" class="p-1 rounded shadow bg-blue-100" v-if="entries.skip != 0">prev</button>
-      <button @click="next" class="p-1 rounded shadow bg-blue-100" v-if="entries.skip + entries.items.length != entries.total">next</button>
+      <div class='nav-buttons'>
+        <button @click="prev" class="p-1 rounded shadow bg-blue-100" v-if="entries.skip != 0">prev</button>
+        <button @click="next" class="p-1 rounded shadow bg-blue-100" v-if="entries.skip + entries.items.length != entries.total">next</button>
+      </div>
     </div>
 
     <div class="games">
