@@ -50,6 +50,13 @@ export default {
 
     },
   },
+
+  created() {
+    if (this.$route.query.s) {
+      this.search = this.$route.query.s;
+      this.searchByTitle();
+    }
+  },
 }
 </script>
 
