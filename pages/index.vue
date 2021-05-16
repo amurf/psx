@@ -1,5 +1,6 @@
 <template>
   <span>
+
     <div v-if="entries.items" class='nav'>
       {{ entries.skip }}-{{ entries.skip + entries.items.length }} of {{ entries.total }}
       <div class='nav-buttons'>
@@ -8,19 +9,16 @@
       </div>
     </div>
 
-    <div class="games">
-      <div v-if="loading">
-        Loading..
-      </div>
 
-      <NuxtLink :to='"/game/" + entry.sys.id' v-else v-for="entry in entries.items" class='game-link' :key="entry.sys.id">
-      <img v-if="entry.fields.cover" :src="entries.includes.Asset.find(item => item.sys.id == entry.fields.cover.sys.id).fields.file.url" />
-      <div v-else class='placeholder-image border'>No cover</div>
-
-      <span class='game-link-serial'>{{ entry.fields.serialNumber }}</span>
-      <span class='game-link-title'> {{ entry.fields.officialTitle }}</span>
-      </NuxtLink>
+    <div v-if="loading"class="text-center text-lg">
+      Loading..
     </div>
+
+    <GameGrid v-else
+              :games="entries.items"
+              :assets="entries.includes.Asset"
+              />
+
   </span>
 </template>
 
@@ -30,7 +28,15 @@ const client = createClient()
 
 export default {
   data() {
-    return { entries: {}, loading: true };
+    return {
+      entries: {
+        items: [],
+        includes: {
+          Assets: [],
+        },
+      },
+      loading: true
+    };
   },
 
   methods: {
@@ -79,33 +85,12 @@ export default {
   font-style: normal;
 }
 
-.games {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-gap: 20px;
-  margin: 0 auto 30px;
-  max-width: 80vw;
-}
-
 .nav {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-items: center;
   margin: 1em;
-}
-
-.game-link {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-}
-
-.game-link img {
-  width: 100%;
-  height: 250px;
-  object-fit: contain;
 }
 
 </style>
