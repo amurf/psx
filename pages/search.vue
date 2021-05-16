@@ -48,6 +48,8 @@ export default {
 
       this.entries = entries;
 
+      // set search term in query param.
+      this.$router.replace({ name: this.$route.name, query: {s: this.search} });
     },
   },
 
