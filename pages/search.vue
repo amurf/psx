@@ -3,15 +3,17 @@
   <div>
 
     <!-- WIP search bar -->
-    <div class='flex'>
+    <div class='search ps-colours'>
       <input type="text" class="search" v-model="search" />
-      <button class='bg-blue-100 p-1' @click="searchByTitle">search</button>
+      <button @click="searchByTitle">search</button>
     </div>
 
-    <GameGrid
-      v-if="entries.items && entries.items.length"
-      :games="entries.items"
-      :assets="entries.includes.Asset" />
+    <div class='mt-2'>
+      <GameGrid
+          v-if="entries.items && entries.items.length"
+          :games="entries.items"
+          :assets="entries.includes.Asset" />
+    </div>
 
   </div>
 
@@ -52,9 +54,34 @@ export default {
 </script>
 
 <style>
-
 .search {
-  @apply p-1 border;
+  @apply flex w-full p-2 justify-center;
 }
+
+.search input {
+  @apply p-2 w-1/4;
+  border: 2px solid #6f706f;
+  border-right: none;
+}
+
+.search button {
+  @apply p-2;
+  background: #bec1c0;
+  border: 2px solid #6f706f;
+  border-left: none;
+}
+
+.ps-colours {
+  background: linear-gradient(110deg,
+  #F3C300  25%,
+  #00AC9F  25%,
+  #00AC9F  50%,
+  #DF0024  50%,
+  #DF0024  75%,
+  #2E6DB4  75%,
+  #2E6DB4 100%
+  );
+}
+
 
 </style>
