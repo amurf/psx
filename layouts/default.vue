@@ -5,28 +5,11 @@
   </div>
 </template>
 
-<style>
-html {
-  font-family:
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
-}
+<style scoped>
 
 .content {
-  /* allow for fixed sidebar */
-  margin-left: 75px;
+  margin-left: 75px; /* This allows for the left sidebar for all our page content */
+  display: block; /* <Nuxt /> defaults to span, but we want div, so force it */
 }
+
 </style>
