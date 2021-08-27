@@ -1,7 +1,14 @@
 <template>
-  <span>
 
-    <div v-if="entries.items" class='nav'>
+  <div>
+
+    <!-- WIP search bar -->
+    <div class='search ps-colours'>
+      <input type="text" class="search" v-model="search" />
+      <button @click="searchByTitle">search</button>
+    </div>
+
+    <div v-if="entries.items.length" class='nav'>
       {{ entries.skip }}-{{ entries.skip + entries.items.length }} of {{ entries.total }}
       <div class='nav-buttons'>
         <button @click="prev" class="p-1 rounded shadow bg-blue-100" v-if="entries.skip != 0">prev</button>
@@ -10,16 +17,15 @@
     </div>
 
 
-    <div v-if="loading"class="text-center text-lg">
-      Loading..
+    <div class='mt-2'>
+      <GameGrid
+          v-if="entries.items && entries.items.length"
+          :games="entries.items"
+          :assets="entries.includes.Asset" />
     </div>
 
-    <GameGrid v-else
-              :games="entries.items"
-              :assets="entries.includes.Asset"
-              />
+  </div>
 
-  </span>
 </template>
 
 <script>
@@ -29,54 +35,56 @@ const client = createClient()
 export default {
   data() {
     return {
+      limit: 3 * 7, // results per page, in data fot future enhancement potential
       entries: {
         items: [],
         includes: {
-          Assets: [],
-        },
+          Asset: []
+        }
       },
-      loading: true
+      loading: true,
+      search: null,
     };
   },
 
   methods: {
+    async searchByTitle(skip = 0) {
+      let entries = await client.getEntries({ skip, limit: this.limit, content_type: 'game', order: 'fields.officialTitle', include: 2,
+        'fields.officialTitle[match]': this.search,
+      });
 
-    async fetchEntries(skip, limit) {
-      this.loading = true;
-
-      let entries = await client.getEntries({ skip, limit, content_type: 'game', order: 'fields.officialTitle', include: 2 });
       this.entries = entries;
 
-      this.loading = false;
+      // s = search term, p = page
+      this.$router.replace({ name: this.$route.name, query: {s: this.search, p: skip >= this.limit ? skip/this.limit : undefined } })
+                  .catch(err => {}); // stops duplicate nav console error, could check route is identical but not worth it imo
     },
+
     async next() {
-      this.fetchEntries(this.entries.skip + this.entries.limit, this.entries.limit);
+      this.searchByTitle(this.entries.skip + this.limit);
     },
+
     async prev() {
-      this.fetchEntries(this.entries.skip - this.entries.limit, this.entries.limit);
+      this.searchByTitle(this.entries.skip - this.limit);
     }
   },
-  async fetch() {
-    const startAtEntry   = 0;
-    const entriesToFetch = 3 * 7;
 
-    this.fetchEntries(startAtEntry, entriesToFetch);
+  created() {
+    if (this.$route.query.s) {
+      this.search = this.$route.query.s;
+
+      let skip = 0;
+      if (this.$route.query.p) {
+        skip = this.$route.query.p * this.limit;
+      }
+
+      this.searchByTitle(skip);
+    }
   },
-
-  /*
-  #DF0024 = psx red
-  #F3C300 = psx yellow
-  #00AC9F = psx green
-  #2E6DB4 = psx blue
-  #bec1c0 = psx light gray
-  #6f706f = psx dark gray
-   */
 }
 </script>
 
 <style>
-
-
 .nav {
   display: flex;
   flex-direction: column;
@@ -84,5 +92,35 @@ export default {
   justify-items: center;
   margin: 1em;
 }
+
+.search {
+  @apply flex w-full p-2 justify-center;
+}
+
+.search input {
+  @apply p-2 w-1/4;
+  border: 2px solid #6f706f;
+  border-right: none;
+}
+
+.search button {
+  @apply p-2;
+  background: #bec1c0;
+  border: 2px solid #6f706f;
+  border-left: none;
+}
+
+.ps-colours {
+  background: linear-gradient(110deg,
+  #F3C300  25%,
+  #00AC9F  25%,
+  #00AC9F  50%,
+  #DF0024  50%,
+  #DF0024  75%,
+  #2E6DB4  75%,
+  #2E6DB4 100%
+  );
+}
+
 
 </style>
