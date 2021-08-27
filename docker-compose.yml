@@ -1,0 +1,16 @@
+version: "2.3"
+
+services:
+
+  frontend:
+    build:
+      context: .
+    environment:
+      BASE_URL: http://api:3000/graphql
+    ports:
+      - 5555:5555
+    volumes:
+      - "$PWD/pages:/app/pages"
+      - "$PWD/plugins:/app/plugins"
+      - "$PWD/components:/app/components"
+      - "$PWD/assets:/app/assets"
