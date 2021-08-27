@@ -1,5 +1,8 @@
 # psx
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/f6cbf5b9-2795-4235-9002-23bcda2b44a4/deploy-status)](https://app.netlify.com/sites/psx/deploys)
+
+
 ## Build Setup
 
 ```bash
