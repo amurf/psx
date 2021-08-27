@@ -74,14 +74,13 @@ export default {
   },
 
   created() {
-    let skip = 0;
-
     if (this.$route.query.s) {
       this.search = this.$route.query.s;
+    }
 
-      if (this.$route.query.p) {
-        skip = this.$route.query.p * this.limit;
-      }
+    let skip = 0;
+    if (this.$route.query.p) {
+      skip = this.$route.query.p * this.limit;
     }
 
     // By default with no query params, will search for all on load.
