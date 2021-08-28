@@ -7,11 +7,15 @@
     </div>
 
     <div v-if="entries.items.length" class='nav'>
-      {{ entries.skip }}-{{ entries.skip + entries.items.length }} of {{ entries.total }}
-      <div class='nav-buttons'>
-        <button @click="prev" class="p-1 rounded shadow bg-blue-100" v-if="entries.skip != 0">prev</button>
-        <button @click="next" class="p-1 rounded shadow bg-blue-100" v-if="entries.skip + entries.items.length != entries.total">next</button>
+      <button @click="prev" class="dpad dpad-left" v-if="entries.skip != 0">
+        <img class='dpad' src="~/assets/dpad-single.png" />
+      </button>
+      <div class='pagination-text'>
+        {{ entries.skip }}-{{ entries.skip + entries.items.length }} of {{ entries.total }}
       </div>
+      <button @click="next" class="dpad dpad-right" v-if="entries.skip + entries.items.length != entries.total">
+        <img class='dpad' src="~/assets/dpad-single.png" />
+      </button>
     </div>
 
     <div v-if="loading"class="text-center text-lg">
@@ -92,9 +96,9 @@ export default {
 <style>
 .nav {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-items: center;
+  justify-content: center;
   margin: 1em;
 }
 
@@ -127,5 +131,20 @@ export default {
   );
 }
 
+.dpad {
+  height: 30px;
+}
+
+.dpad-left {
+  transform: rotate(90deg);
+}
+
+.dpad-right {
+  transform: rotate(270deg);
+}
+
+.pagination-text {
+  padding: 0.5em;
+}
 
 </style>
