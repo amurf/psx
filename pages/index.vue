@@ -2,8 +2,7 @@
 
   <div>
     <div class='search ps-colours'>
-      <input  @keyup.enter="searchByTitle" type="text" class="search" v-model="search" />
-      <button @click="searchByTitle">search</button>
+      <input @keyup.enter="searchByTitle" type="text" class="search" ref="search" v-model="search" placeholder="Search.."/>
     </div>
 
     <div v-if="entries.items.length" class='nav'>
@@ -89,6 +88,11 @@ export default {
 
     // By default with no query params, will search for all on load.
     this.searchByTitle(skip);
+
+  },
+
+  mounted() {
+    this.$refs.search.focus();
   },
 }
 </script>
@@ -107,16 +111,10 @@ export default {
 }
 
 .search input {
-  @apply p-2 w-1/4;
+  @apply p-2;
+  width: 80%;
   border: 2px solid #6f706f;
   border-right: none;
-}
-
-.search button {
-  @apply p-2;
-  background: #bec1c0;
-  border: 2px solid #6f706f;
-  border-left: none;
 }
 
 .ps-colours {
