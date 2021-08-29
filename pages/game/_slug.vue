@@ -3,7 +3,7 @@
     <!-- TODO: turn this into a header/nav component -->
     <div class='ps-colours'></div>
 
-    <a href="" @click.prevent="$router.back()">
+    <a href="" @click.prevent="window.history.length > 1 ? $router.back() : $router.push('/')">
       <img class='dpad dpad-left' src="~/assets/dpad-single.png" />
     </a>
 
