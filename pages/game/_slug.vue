@@ -1,47 +1,60 @@
 <template>
-  <div style='text-align: center; padding-top: 1em'>
-    <NuxtLink class="p-1 rounded shadow bg-blue-100" to="/">Back</NuxtLink>
-    <div v-if="!loading" class='game-view'>
-      <img v-if="fields.hasOwnProperty('cover')" :src="fields.cover.fields.file.url" />
+  <div>
+    <!-- TODO: turn this into a header/nav component -->
+    <div class='ps-colours'></div>
 
-      <table>
-        <tr>
-          <th> Official title </th>
-          <td> {{ fields.officialTitle }} </td>
-        </tr>
+    <a href="" @click.prevent="$router.back()">
+      <img class='dpad dpad-left' src="~/assets/dpad-single.png" />
+    </a>
 
-        <tr>
-          <th> Common title </th>
-          <td> {{ fields.commonTitle }} </td>
-        </tr>
+    <template v-if="!loading">
+      <div class='game-view'>
+        <img v-if="fields.hasOwnProperty('cover')" :src="fields.cover.fields.file.url" />
 
-        <tr>
-          <th> Genre </th>
-          <td> {{ fields.genre }} </td>
-        </tr>
+        <table>
+          <tr>
+            <th> Official title </th>
+            <td> {{ fields.officialTitle }} </td>
+          </tr>
 
-        <tr>
-          <th> Date released </th>
-          <td> {{ fields.dateReleased }} </td>
-        </tr>
+          <tr>
+            <th> Common title </th>
+            <td> {{ fields.commonTitle }} </td>
+          </tr>
 
-        <tr>
-          <th> Developer </th>
-          <td> {{ fields.developer }} </td>
-        </tr>
+          <tr>
+            <th> Genre </th>
+            <td> {{ fields.genre }} </td>
+          </tr>
 
-        <tr>
-          <th> Publisher </th>
-          <td> {{ fields.publisher }} </td>
-        </tr>
+          <tr>
+            <th> Date released </th>
+            <td> {{ fields.dateReleased }} </td>
+          </tr>
 
-        <tr>
-          <th> Players </th>
-          <td> {{ fields.players }} </td>
-        </tr>
+          <tr>
+            <th> Developer </th>
+            <td> {{ fields.developer }} </td>
+          </tr>
 
-      </table>
-    </div>
+          <tr>
+            <th> Publisher </th>
+            <td> {{ fields.publisher }} </td>
+          </tr>
+
+          <tr>
+            <th> Players </th>
+            <td> {{ fields.players }} </td>
+          </tr>
+
+        </table>
+      </div>
+
+      <div class='screenshots'>
+        <img v-for="screenshot in fields.screenshots" :src="screenshot.fields.file.url" />
+      </div>
+
+    </template>
 
     <div v-else>
       Loading..
@@ -72,8 +85,7 @@ export default {
   async fetch() {
     this.loading = true;
 
-    let data = await client.getEntry(this.gameId);
-    this.entry = data;
+    this.entry = await client.getEntry(this.gameId);
 
     this.loading = false;
   },
@@ -110,10 +122,11 @@ td {
 }
 
 .game-view {
-  padding-left: 75px;
-  display: grid;
-  grid-template-columns: auto auto;
-  margin: 2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 2em;
 }
 
 table {
@@ -126,4 +139,35 @@ table {
   }
 }
 
+.screenshots {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  width:90%;
+  grid-gap:10px;
+  margin:auto;
+}
+
+.dpad {
+  height: 50px;
+  margin: auto;
+  margin-top:2em;
+}
+
+.dpad-left {
+  transform: rotate(90deg);
+}
+
+.ps-colours {
+  @apply flex w-full;
+  height: 60px;
+  background: linear-gradient(110deg,
+  #F3C300  25%,
+  #00AC9F  25%,
+  #00AC9F  50%,
+  #DF0024  50%,
+  #DF0024  75%,
+  #2E6DB4  75%,
+  #2E6DB4 100%
+  );
+}
 </style>
