@@ -3,7 +3,7 @@
     <!-- TODO: turn this into a header/nav component -->
     <div class='ps-colours'></div>
 
-    <a href="" @click.prevent="window.history.length > 1 ? $router.back() : $router.push('/')">
+    <a href="" @click.prevent="back()">
       <img class='dpad dpad-left' src="~/assets/dpad-single.png" />
     </a>
 
@@ -75,6 +75,16 @@ export default {
     fields() {
       return this.entry.fields;
     },
+  },
+
+  methods: {
+    // This uses history if it makes sense, otherwise just back to home page.
+    back() {
+      const startLocation   = this.$router.history._startLocation;
+      const currentLocation = this.$route.path;
+
+      startLocation == currentLocation ? this.$router.push("/") : this.$router.back();
+    }
   },
 
   async asyncData({ params }) {
