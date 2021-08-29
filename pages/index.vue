@@ -76,7 +76,7 @@ export default {
     }
   },
 
-  created() {
+  fetch() {
     if (this.$route.query.s) {
       this.search = this.$route.query.s;
     }
@@ -88,7 +88,6 @@ export default {
 
     // By default with no query params, will search for all on load.
     this.searchByTitle(skip);
-
   },
 
   mounted() {
