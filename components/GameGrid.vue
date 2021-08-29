@@ -1,15 +1,15 @@
 <template>
-    <div class="games">
+  <div class="games">
 
-      <NuxtLink :to='"/game/" + game.sys.id' v-for="game in games" class='game-link' :key="game.sys.id">
-      <img v-if="game.fields.cover" :src="assets.find(item => item.sys.id == game.fields.cover.sys.id).fields.file.url" />
-      <div v-else class='placeholder-image border'>No cover</div>
+    <NuxtLink :to='"/game/" + game.sys.id' v-for="game in games" class='game-link' :key="game.sys.id">
+    <img v-if="game.fields.cover" :src="assets.find(item => item.sys.id == game.fields.cover.sys.id).fields.file.url" />
+    <div v-else class='placeholder-image border'>No cover</div>
 
-      <span class='game-link-serial'>{{ game.fields.serialNumber }}</span>
-      <span class='game-link-title'> {{ game.fields.officialTitle }}</span>
-      </NuxtLink>
+    <span class='game-link-serial'>{{ game.fields.serialNumber }}</span>
+    <span class='game-link-title'> {{ game.fields.officialTitle }}</span>
+    </NuxtLink>
 
-    </div>
+  </div>
 </template>
 
 <script>
