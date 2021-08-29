@@ -56,7 +56,7 @@
 
     </template>
 
-    <div v-else>
+    <div class='loading' v-else>
       Loading..
     </div>
   </div>
@@ -179,5 +179,10 @@ table {
   #2E6DB4  75%,
   #2E6DB4 100%
   );
+}
+
+.loading {
+  text-align: center;
+  font-size: 2em;
 }
 </style>
