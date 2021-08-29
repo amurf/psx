@@ -155,6 +155,7 @@ table {
   width:90%;
   grid-gap:10px;
   margin:auto;
+  margin-bottom: 1em;
 }
 
 .dpad {
