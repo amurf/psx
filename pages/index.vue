@@ -1,40 +1,48 @@
 <template>
-
   <div>
-    <div class='search ps-colours'>
-      <input @keyup.enter="searchByTitle" type="text" class="search" ref="search" v-model="search" placeholder="Search.."/>
+    <div class="search ps-colours">
+      <input
+        @keyup.enter="searchByTitle"
+        type="text"
+        class="search"
+        ref="search"
+        v-model="search"
+        placeholder="Search.."
+      />
     </div>
 
-    <div v-if="entries.items.length" class='nav'>
+    <div v-if="entries.items.length" class="nav">
       <button @click="prev" class="dpad dpad-left" v-if="entries.skip != 0">
-        <img class='dpad' src="~/assets/dpad-single.png" />
+        <img class="dpad" src="~/assets/dpad-single.png" />
       </button>
-      <div class='pagination-text'>
-        {{ entries.skip }}-{{ entries.skip + entries.items.length }} of {{ entries.total }}
+      <div class="pagination-text">
+        {{ entries.skip }}-{{ entries.skip + entries.items.length }} of
+        {{ entries.total }}
       </div>
-      <button @click="next" class="dpad dpad-right" v-if="entries.skip + entries.items.length != entries.total">
-        <img class='dpad' src="~/assets/dpad-single.png" />
+      <button
+        @click="next"
+        class="dpad dpad-right"
+        v-if="entries.skip + entries.items.length != entries.total"
+      >
+        <img class="dpad" src="~/assets/dpad-single.png" />
       </button>
     </div>
 
-    <div v-if="loading"class="text-center text-lg">
-      Loading..
-    </div>
+    <div v-if="loading" class="text-center text-lg">Loading..</div>
 
-    <div v-else class='mt-2'>
+    <div v-else class="mt-2">
       <GameGrid
-          v-if="entries.items && entries.items.length"
-          :games="entries.items"
-          :assets="entries.includes.Asset" />
+        v-if="entries.items && entries.items.length"
+        :games="entries.items"
+        :assets="entries.includes.Asset"
+      />
     </div>
-
   </div>
-
 </template>
 
 <script>
-import {createClient} from '~/plugins/contentful.js'
-const client = createClient()
+import { createClient } from "~/plugins/contentful.js";
+const client = createClient();
 
 export default {
   data() {
@@ -44,8 +52,8 @@ export default {
       entries: {
         items: [],
         includes: {
-          Asset: []
-        }
+          Asset: [],
+        },
       },
       search: undefined,
     };
@@ -55,16 +63,28 @@ export default {
     async searchByTitle(skip = 0) {
       this.loading = true;
 
-      let entries = await client.getEntries({ skip, limit: this.limit, content_type: 'game', order: 'fields.officialTitle', include: 2,
-        'fields.officialTitle[match]': this.search,
+      let entries = await client.getEntries({
+        skip,
+        limit: this.limit,
+        content_type: "game",
+        order: "fields.officialTitle",
+        include: 2,
+        "fields.officialTitle[match]": this.search,
       });
 
       this.entries = entries;
       this.loading = false;
 
       // s = search term, p = page
-      this.$router.replace({ name: this.$route.name, query: {s: this.search, p: skip >= this.limit ? skip/this.limit : undefined } })
-        .catch(err => {}); // stops duplicate nav console error, could check route is identical but not worth it imo
+      this.$router
+        .replace({
+          name: this.$route.name,
+          query: {
+            s: this.search,
+            p: skip >= this.limit ? skip / this.limit : undefined,
+          },
+        })
+        .catch((err) => {}); // stops duplicate nav console error, could check route is identical but not worth it imo
     },
 
     async next() {
@@ -73,7 +93,7 @@ export default {
 
     async prev() {
       this.searchByTitle(this.entries.skip - this.limit);
-    }
+    },
   },
 
   fetch() {
@@ -93,7 +113,7 @@ export default {
   mounted() {
     this.$refs.search.focus();
   },
-}
+};
 </script>
 
 <style>
@@ -117,14 +137,15 @@ export default {
 }
 
 .ps-colours {
-  background: linear-gradient(110deg,
-  #F3C300  25%,
-  #00AC9F  25%,
-  #00AC9F  50%,
-  #DF0024  50%,
-  #DF0024  75%,
-  #2E6DB4  75%,
-  #2E6DB4 100%
+  background: linear-gradient(
+    110deg,
+    #f3c300 25%,
+    #00ac9f 25%,
+    #00ac9f 50%,
+    #df0024 50%,
+    #df0024 75%,
+    #2e6db4 75%,
+    #2e6db4 100%
   );
 }
 
@@ -143,5 +164,4 @@ export default {
 .pagination-text {
   padding: 0.5em;
 }
-
 </style>

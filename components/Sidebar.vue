@@ -1,21 +1,20 @@
 <template>
-    <div class="side-logo">
-      <span class='psx-logo-border'>
-        <img class='psx-logo' src="~/assets/psx.png" />
-      </span>
-      <span class='region-indicator'>PAL</span>
-      <span class='flip'>PlayStation</span>
-    </div>
+  <div class="side-logo">
+    <span class="psx-logo-border">
+      <img class="psx-logo" src="~/assets/psx.png" />
+    </span>
+    <span class="region-indicator">PAL</span>
+    <span class="flip">PlayStation</span>
+  </div>
 </template>
 
 <style>
-
 @font-face {
-  font-family: 'Zrnic';
-  src:  url('~/assets/fonts/Zrnic.ttf.woff') format('woff'),
-  url('~/assets/fonts/Zrnic.ttf.svg#Zrnic') format('svg'),
-  url('~/assets/fonts/Zrnic.ttf.eot'),
-  url('~/assets/fonts/Zrnic.ttf.eot?#iefix') format('embedded-opentype');
+  font-family: "Zrnic";
+  src: url("~/assets/fonts/Zrnic.ttf.woff") format("woff"),
+    url("~/assets/fonts/Zrnic.ttf.svg#Zrnic") format("svg"),
+    url("~/assets/fonts/Zrnic.ttf.eot"),
+    url("~/assets/fonts/Zrnic.ttf.eot?#iefix") format("embedded-opentype");
   font-weight: normal;
   font-style: normal;
 }
@@ -27,7 +26,7 @@
   top: 0;
   padding-top: 1em;
   background-color: black;
-  text-align:center;
+  text-align: center;
 }
 
 .flip {
@@ -37,14 +36,14 @@
   writing-mode: vertical-rl;
   text-align: right;
   font-size: 2.5em;
-  font-family: 'Zrnic';
+  font-family: "Zrnic";
   background-color: black;
 }
 
 .region-indicator {
   background-color: white;
   font-weight: bold;
-  font-family: 'ZRNIC';
+  font-family: "ZRNIC";
   border-radius: 5px;
   width: 60px;
   display: inline-block;
@@ -59,12 +58,10 @@
   height: 60px;
   display: inline-block;
   width: 65px;
-
 }
 .psx-logo {
   height: 50px;
   width: 50px;
   display: inline;
 }
-
 </style>
